@@ -1,15 +1,33 @@
 {% extends 'main_app/base.html' %}
+{% load static %}
+
+{% block title %}Soma-Dogs - Магазин товарів для тварин{% endblock %}
 
 {% block content %}
-    <div>
-        <p>Ласкаво просимо на наш магазин для тварин!</p>
-        <p>Виберіть одну з наступних сторінок щоб перейти на них:</p>
-        
-        <ul>
-            <li><a href="{% url 'about' %}">Про нас</a> - Дізнайтеся більше про наш проект</li>
-            <li><a href="{% url 'services' %}">Послуги</a> - Перегляньте наші послуги</li>
-            <li><a href="{% url 'projects' %}">Проекти</a> - Наші нінші проекти</li>
-            <li><a href="{% url 'contact' %}">Контакти</a> - Зв'яжіться з нами</li>
-        </ul>
+<h2>Ласкаво просимо до Soma-Dogs!</h2>
+<p>Широкий асортимент якісних товарів для ваших домашніх улюбленців.</p>
+
+{% if featured_products %}
+    <h3>Рекомендовані товари</h3>
+    <div class="products-grid">
+        {% for product in featured_products %}
+            <div class="product-card">
+                <div class="product-image">
+                    {% if product.image %}
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                    {% else %}
+                        <img src="{% static 'main_app/images/no-image.jpg' %}" alt="Зображення відсутнє">
+                    {% endif %}
+                </div>
+                <h3 class="product-title">{{ product.name }}</h3>
+                <p>Категорія: {{ product.category.name }}</p>
+                <p class="product-price">{{ product.price }} грн</p>
+                <a href="{% url 'product_detail' product.id %}" class="product-link">Детальніше</a>
+            </div>
+        {% endfor %}
     </div>
+    <a href="{% url 'products' %}" class="home-button">Всі товари</a>
+{% else %}
+    <p>На жаль, рекомендовані товари відсутні.</p>
+{% endif %}
 {% endblock %}

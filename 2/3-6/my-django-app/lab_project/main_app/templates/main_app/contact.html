@@ -1,14 +1,13 @@
 {% extends 'main_app/base.html' %}
 
+{% block title %}Контакти - Soma-Dogs{% endblock %}
+
 {% block content %}
-    <div>
-        <p>Контактна інформація:</p>
-        <address>
-            <p>Електронна пошта: shizenking@gmail.com</p>
-            <p>Телефон: +380668102484</p>
-            <p>Адреса: вулиця Конякіна, 5, Луцьк, Волинська область</p>
-        </address>
-        
-        <a href="{% url 'home' %}" class="home-button">Повернутися на головну</a>
-    </div>
+<h2>Контактна інформація:</h2>
+<address>
+    <p>Електронна пошта: shizenking@gmail.com</p>
+    <p>Телефон: +380668102484</p>
+    <p>Адреса: вулиця Конякіна, 5, Луцьк, Волинська область</p>
+</address>
+<a href="{% url 'home' %}" class="home-button">Повернутися на головну</a>
 {% endblock %}

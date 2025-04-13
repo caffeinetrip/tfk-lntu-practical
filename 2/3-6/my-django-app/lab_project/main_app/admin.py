@@ -18,14 +18,14 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('name', 'category', 'price', 'get_discounted_price', 'stock_quantity', 'status', 'is_featured')
+    list_display = ('name', 'category', 'price', 'discounted_price', 'stock_quantity', 'status', 'is_featured')
     list_filter = ('category', 'status', 'is_featured')
     search_fields = ('name', 'description')
     list_editable = ('price', 'stock_quantity', 'status', 'is_featured')
-    readonly_fields = ('created_at', 'updated_at')
+    readonly_fields = ('created_at', 'updated_at', 'discounted_price')
     fieldsets = (
         ('Основна інформація', {
-            'fields': ('name', 'category', 'description', 'price', 'discount_percentage', 'get_discounted_price')
+            'fields': ('name', 'category', 'description', 'price', 'discount_percentage')
         }),
         ('Склад', {
             'fields': ('stock_quantity', 'status', 'is_featured')
@@ -44,6 +44,6 @@ class ProductAdmin(admin.ModelAdmin):
         }),
     )
     
-    def get_discounted_price(self, obj):
+    def discounted_price(self, obj):
         return obj.get_discounted_price()
-    get_discounted_price.short_description = "Ціна зі знижкою"
+    discounted_price.short_description = "Ціна зі знижкою"

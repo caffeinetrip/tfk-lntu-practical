@@ -1,17 +1,11 @@
 {% extends 'main_app/base.html' %}
 
+{% block title %}Послуги - Soma-Dogs{% endblock %}
+
 {% block content %}
-    <div>
-        <p>Ми пропонуємо такі послуги:</p>
-        <ul>
-            <li>Товари для собак</li>
-            <li>Товари для котів</li>
-            <li>Товари для гризунів</li>
-            <li>Товари для птахів</li>
-            <li>Товари для рибок</li>
-            <li>Товари для рептилій</li>
-        </ul>
-        
-        <a href="{% url 'home' %}" class="home-button">Повернутися на головну</a>
-    </div>
+<h2>Ми пропонуємо такі послуги:</h2>
+<ul>
+    <li><a href="{% url 'home' %}">Товари для собак</a></li>
+</ul>
+<a href="{% url 'home' %}" class="home-button">Повернутися на головну</a>
 {% endblock %}

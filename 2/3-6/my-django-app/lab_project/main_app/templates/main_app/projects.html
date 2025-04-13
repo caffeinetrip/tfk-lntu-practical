@@ -1,13 +1,17 @@
 {% extends 'main_app/base.html' %}
 
+{% block title %}Проекти - Soma-Dogs{% endblock %}
+
 {% block content %}
-    <div>
-        <p>Поставте 5*</p>
-        <ul>
-            <iframe frameborder="0" src="https://itch.io/embed/3456549" width="552" height="167"><a href="https://caffeinetrip.itch.io/echo-of-fallens">ECHO OF THE FALLENS by soma</a></iframe>
-            <iframe frameborder="0" src="https://itch.io/embed/3349345" width="552" height="167"><a href="https://caffeinetrip.itch.io/peak">PEAK by soma</a></iframe>
-        </ul>
-        
-        <a href="{% url 'home' %}" class="home-button">Повернутися на головну</a>
-    </div>
+<h2>Проекти</h2>
+<p>Поставте 5*</p>
+<iframe frameborder="0" src="https://itch.io/embed/3456549" width="552" height="167">
+    <a href="https://caffeinetrip.itch.io/echo-of-fallens">ECHO OF THE FALLENS by soma</a>
+</iframe>
+<br><br>
+<iframe frameborder="0" src="https://itch.io/embed/3349345" width="552" height="167">
+    <a href="https://caffeinetrip.itch.io/peak">PEAK by soma</a>
+</iframe>
+<br>
+<a href="{% url 'home' %}" class="home-button">Повернутися на головну</a>
 {% endblock %}

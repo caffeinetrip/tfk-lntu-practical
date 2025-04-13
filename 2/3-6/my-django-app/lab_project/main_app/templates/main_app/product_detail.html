@@ -1,0 +1,117 @@
+{% extends 'main_app/base.html' %}
+{% load static %}
+{% load main_app_filters %}
+
+{% block title %}{{ product.name }} - Soma-Dogs{% endblock %}
+
+{% block content %}
+<div>
+    <p>
+        <a href="{% url 'home' %}">Головна</a> &gt;
+        <a href="{% url 'products' %}">Товари</a> &gt;
+        <a href="{% url 'products_by_category' product.category.id %}">{{ product.category.name }}</a> &gt;
+        {{ product.name }}
+    </p>
+    
+    <div style="display: flex; flex-wrap: wrap; gap: 30px; margin: 20px 0;">
+        <div style="flex: 1; min-width: 300px;">
+            {% if product.image %}
+                <img src="{{ product.image.url }}" alt="{{ product.name }}" style="width: 100%; border-radius: 4px;">
+            {% else %}
+                <img src="{% static 'main_app/images/no-image.jpg' %}" alt="Зображення відсутнє" style="width: 100%; border-radius: 4px;">
+            {% endif %}
+        </div>
+        
+        <div style="flex: 1; min-width: 300px;">
+            <h2>{{ product.name }}</h2>
+            
+            <p>Категорія: <a href="{% url 'products_by_category' product.category.id %}">{{ product.category.name }}</a></p>
+            
+            <p style="font-size: 1.2rem; font-weight: bold; color: #e63946;">
+                {% if product.discount_percentage > 0 %}
+                    <span style="text-decoration: line-through; color: #999;">{{ product.price }} грн</span>
+                    {{ product.get_discounted_price }} грн
+                    <br>
+                    <span style="color: green; font-size: 0.9rem;">Економія: {{ product.price|sub:product.get_discounted_price }} грн</span>
+                {% else %}
+                    {{ product.price }} грн
+                {% endif %}
+            </p>
+            
+            <p>
+                <strong>Статус:</strong>
+                {% if product.status == 'available' %}
+                    <span style="color: green;">В наявності ({{ product.stock_quantity }} шт.)</span>
+                {% elif product.status == 'out_of_stock' %}
+                    <span style="color: red;">Немає в наявності</span>
+                {% elif product.status == 'coming_soon' %}
+                    <span style="color: orange;">Скоро у продажу</span>
+                {% else %}
+                    <span style="color: gray;">Знято з виробництва</span>
+                {% endif %}
+            </p>
+            
+            {% if product.description %}
+                <h3>Опис</h3>
+                <p>{{ product.description }}</p>
+            {% endif %}
+            
+            {% if product.specifications %}
+                <h3>Характеристики</h3>
+                <table border="1" style="border-collapse: collapse; width: 100%;">
+                    {% for key, value in product.specifications.items %}
+                        <tr>
+                            <td style="padding: 8px; font-weight: bold;">{{ key|capfirst }}</td>
+                            <td style="padding: 8px;">{{ value }}</td>
+                        </tr>
+                    {% endfor %}
+                    
+                    {% if product.size %}
+                        <tr>
+                            <td style="padding: 8px; font-weight: bold;">Розмір</td>
+                            <td style="padding: 8px;">{{ product.get_size_display }}</td>
+                        </tr>
+                    {% endif %}
+                    
+                    {% if product.weight %}
+                        <tr>
+                            <td style="padding: 8px; font-weight: bold;">Вага</td>
+                            <td style="padding: 8px;">{{ product.weight }} кг</td>
+                        </tr>
+                    {% endif %}
+                </table>
+            {% endif %}
+            
+            <div style="margin-top: 20px;">
+                {% if product.status == 'available' and product.stock_quantity > 0 %}
+                    <button style="background-color: #4CAF50; border: none; color: white; padding: 10px 20px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 4px;">Додати в кошик</button>
+                {% elif product.status == 'coming_soon' %}
+                    <button style="background-color: #ff9800; border: none; color: white; padding: 10px 20px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 4px;">Повідомити про наявність</button>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    {% if related_products %}
+        <h3>Схожі товари</h3>
+        <div class="products-grid">
+            {% for related_product in related_products %}
+                <div class="product-card">
+                    <div class="product-image">
+                        {% if related_product.image %}
+                            <img src="{{ related_product.image.url }}" alt="{{ related_product.name }}">
+                        {% else %}
+                            <img src="{% static 'main_app/images/no-image.jpg' %}" alt="Зображення відсутнє">
+                        {% endif %}
+                    </div>
+                    <h3 class="product-title">{{ related_product.name }}</h3>
+                    <p class="product-price">{{ related_product.get_discounted_price }} грн</p>
+                    <a href="{% url 'product_detail' related_product.id %}" class="product-link">Детальніше</a>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    
+    <a href="{% url 'products' %}" class="home-button">Назад до списку товарів</a>
+</div>
+{% endblock %}
