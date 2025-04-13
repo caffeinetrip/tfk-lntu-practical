@@ -4,17 +4,14 @@
 {% block title %}Soma-Dogs{% endblock %}
 
 {% block content %}
-<section class="about-section">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 mx-auto">
-                <h1 class="text-center mb-4">Про нас</h1>
-                
-                <div class="about-content">                    
-                    <p>Магаз "Soma-Dogs". Зробив Павлюк Владислав, 22-іст ТФК ЛНТУ. Для собак і не тільки. Заходьте, не пожалієте.</p>
-                </div>
-            </div>
-        </div>
+    <div>
+        <p>Про нас:</p>
+        <address>
+            <p>Магаз "Soma-Dogs". Зробив Павлюк Владислав, 22-іст ТФК ЛНТУ.  </p>
+            <p>Для собак і не тільки.</p>
+            <p>Заходьте, не пожалієте.</p>
+        </address>
+        
+        <a href="{% url 'home' %}" class="home-button">Повернутися на головну</a>
     </div>
-</section>
 {% endblock %}
