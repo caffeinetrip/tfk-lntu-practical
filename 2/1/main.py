@@ -6,7 +6,12 @@ class Student():
         self.surname = surname
         self.year = year
         
-    def get_course(self):
+    @property
+    def list(self):
+        return [self.name, self.surname]
+    
+    @property
+    def course(self):
         if self.year is None:
             return None
         
@@ -17,11 +22,8 @@ class Student():
             return 'too young'
         
         return min((age - 16) + 1, 4)
-        
-    def create_list(self):
-        return [self.name, self.surname]
     
 vp = Student('Vlad', 'Pavluk', 2008)
-print(vp.get_course())
-print(vp.create_list())
+print(vp.course)
+print(vp.list)
     
